@@ -133,15 +133,3 @@ void function::show(function *cursor){
 	if(cursor == this) standend();
 }
 
-std::ostream &operator<<(std::ostream &os, const function &fnc){
-	switch(fnc.type){
-		case Type::application:
-			return os << '`' << *fnc.left << *fnc.right;
-		case Type::character:
-			os << '.';
-		case Type::combinator:
-			return os << fnc.name;
-		default:
-			return os << 'i';
-	}
-}
