@@ -17,6 +17,8 @@ function *function::move(int ch){
 				case 't':
 					return parent ? parent->right : this;
 				case KEY_BACKSPACE:
+				case 127:
+				case '\b':
 					delete left;
 					delete right;
 					type = Type::input;
@@ -60,6 +62,8 @@ function *function::move(int ch){
 				case 't':
 					return parent ? parent->right : this;
 				case KEY_BACKSPACE:
+				case 127:
+				case '\b':
 					type = Type::input;
 					break;
 				case 'y':
