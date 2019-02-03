@@ -2,7 +2,7 @@
 
 class function{
 	function *parent, *left, *right;
-	char name;
+	char name, text;
 	enum class Type { application, combinator, character, input, character_input } type;
 public:
 	function(function * = nullptr);
@@ -18,7 +18,7 @@ public:
 			case Type::application:
 				return os << '`' << *fnc.left << *fnc.right;
 			case Type::character:
-				os << '.';
+				return os << fnc.name << fnc.text;
 			case Type::combinator:
 				return os << fnc.name;
 			default:
@@ -34,10 +34,10 @@ public:
 			fnc.left = new function(&fnc);
 			fnc.right = new function(&fnc);
 			is >> *fnc.left >> *fnc.right;
-		}else if(ch == '.'){
+		}else if(ch == '.' || ch == '?'){
 			fnc.type = Type::character;
-			is >> ch;
 			fnc.name = ch;
+			is >> fnc.text;
 		}else{
 			fnc.type = Type::combinator;
 			fnc.name = ch;

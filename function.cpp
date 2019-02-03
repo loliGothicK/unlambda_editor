@@ -67,6 +67,7 @@ function *function::move(int ch){
 					function *tmp = new function(this);
 					tmp->type = type;
 					tmp->name = name;
+					tmp->text = text;
 					type = Type::application;
 					(ch == 'y' ? left : right) = tmp;
 					(ch == 'y' ? right : left) = new function(this);
@@ -79,6 +80,12 @@ function *function::move(int ch){
 				case 'k':
 				case 'i':
 				case 'r':
+				case 'v':
+				case 'c':
+				case 'd':
+				case 'e':
+				case '@':
+				case '|':
 					type = Type::combinator;
 					name = ch;
 					break;
@@ -88,13 +95,15 @@ function *function::move(int ch){
 					right = new function(this);
 					break;
 				case '.':
+				case '?':
 					type = Type::character_input;
+					name = ch;
 					break;
 			}
 			break;
 		case Type::character_input:
 			type = Type::character;
-			name = ch;
+			text = ch;
 			break;
 	}
 	return this;
@@ -120,12 +129,14 @@ void function::show(function *cursor){
 			right->show(cursor);
 			break;
 		case Type::character:
-			addch('.');
+			addch(name);
+			addch(text);
+			break;
 		case Type::combinator:
 			addch(name);
 			break;
 		case Type::character_input:
-			addch('.');
+			addch(name);
 		case Type::input:
 			addch('_');
 			break;
