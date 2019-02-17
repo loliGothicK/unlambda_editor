@@ -1,3 +1,6 @@
+#ifndef FNC_HPP
+#define FNC_HPP
+
 class Fnc{
 	Fnc *par, **ths;
 	virtual void _show(Fnc *) = 0;
@@ -31,3 +34,5 @@ class App : public Fnc{
 public:
 	Fnc *child_left(), *child_right();
 };
+
+#endif
