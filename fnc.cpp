@@ -36,7 +36,7 @@ void Fnc::show(Fnc *cur){
 	_show(cur);
 	if(cur == this) standend();
 }
-void Com::_show(Fnc *cur){
+void Com::_show(Fnc *cur [[maybe_unused]]){
 	addch(text);
 }
 void App::_show(Fnc *cur){
