@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <curses.h>
 #include "fnc.h"
+#include <array>
 
 enum class Command{
 	none,
@@ -14,25 +15,31 @@ enum class Command{
 	brother_left,
 	brother_right,
 	parent
-} list[256];
+};
 
-int main(int argc, char *argv[]){
+int main([[maybe_unused]] int argc, [[maybe_unused]] char *argv[]){
+
+	constexpr auto list = [] {
+		std::array<Command, 256> list{};
+		list[10] = Command::quit;
+		list['a'] = Command::app;
+		list['s'] = Command::com_s;
+		list['k'] = Command::com_k;
+		list['i'] = Command::com_i;
+		list['l'] = Command::child_left;
+		list['r'] = Command::child_right;
+		list['l' & 037] = Command::brother_left;
+		list['r' & 037] = Command::brother_right;
+		list['p'] = Command::parent;
+		return list;
+	}();
+
 	initscr();
 	Fnc *fnc = new Com(nullptr, &fnc, 'i'), *cur = fnc;
 	noecho();
 	keypad(stdscr, TRUE);
 	curs_set(0);
 
-	list[10] = Command::quit;
-	list['a'] = Command::app;
-	list['s'] = Command::com_s;
-	list['k'] = Command::com_k;
-	list['i'] = Command::com_i;
-	list['l'] = Command::child_left;
-	list['r'] = Command::child_right;
-	list['l' & 037] = Command::brother_left;
-	list['r' & 037] = Command::brother_right;
-	list['p'] = Command::parent;
 
 	for(;;){
 		move(0, 0);
